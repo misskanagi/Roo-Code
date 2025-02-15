@@ -1,9 +1,9 @@
 {
 	"name": "roo-cline",
 	"displayName": "Roo Code (prev. Roo Cline)",
-	"description": "A VS Code plugin that enhances coding with AI-powered automation, multi-model support, and experimental features.",
+	"description": "An AI-powered autonomous coding agent that lives in your editor.",
 	"publisher": "RooVeterinaryInc",
-	"version": "3.3.19",
+	"version": "3.3.20",
 	"icon": "assets/icons/rocket.png",
 	"galleryBanner": {
 		"color": "#617A91",
@@ -282,7 +282,9 @@
 		"compile:integration": "tsc -p tsconfig.integration.json",
 		"install:all": "npm install && cd webview-ui && npm install",
 		"lint": "eslint src --ext ts && npm run lint --prefix webview-ui",
+		"lint-local": "eslint -c .eslintrc.local.json src --ext ts && npm run lint --prefix webview-ui",
 		"lint-fix": "eslint src --ext ts --fix && npm run lint-fix --prefix webview-ui",
+		"lint-fix-local": "eslint -c .eslintrc.local.json src --ext ts --fix && npm run lint-fix --prefix webview-ui",
 		"package": "npm run build:webview && npm run check-types && npm run lint && node esbuild.js --production",
 		"pretest": "npm run compile && npm run compile:integration",
 		"dev": "cd webview-ui && npm run dev",

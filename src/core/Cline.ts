@@ -2790,9 +2790,9 @@ export class Cline {
 		)
 
 		const [parsedUserContent, environmentDetails] = await this.loadContext(userContent, includeFileDetails)
-		userContent = parsedUserContent
 		// add environment details as its own text block, separate from tool results
-		userContent.push({ type: "text", text: environmentDetails })
+		userContent = [{ type: "text", text: environmentDetails }]
+		userContent = userContent.concat(parsedUserContent)
 
 		await this.addToApiConversationHistory({ role: "user", content: userContent })
 

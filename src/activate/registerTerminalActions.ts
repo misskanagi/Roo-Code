@@ -3,11 +3,11 @@ import { ClineProvider } from "../core/webview/ClineProvider"
 import { TerminalManager } from "../integrations/terminal/TerminalManager"
 
 const TERMINAL_COMMAND_IDS = {
-	ADD_TO_CONTEXT: "roo-cline.terminalAddToContext",
-	FIX: "roo-cline.terminalFixCommand",
-	FIX_IN_CURRENT_TASK: "roo-cline.terminalFixCommandInCurrentTask",
-	EXPLAIN: "roo-cline.terminalExplainCommand",
-	EXPLAIN_IN_CURRENT_TASK: "roo-cline.terminalExplainCommandInCurrentTask",
+	ADD_TO_CONTEXT: "roo-cline-paper.terminalAddToContext",
+	FIX: "roo-cline-paper.terminalFixCommand",
+	FIX_IN_CURRENT_TASK: "roo-cline-paper.terminalFixCommandInCurrentTask",
+	EXPLAIN: "roo-cline-paper.terminalExplainCommand",
+	EXPLAIN_IN_CURRENT_TASK: "roo-cline-paper.terminalExplainCommandInCurrentTask",
 } as const
 
 export const registerTerminalActions = (context: vscode.ExtensionContext) => {

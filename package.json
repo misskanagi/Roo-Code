@@ -1,10 +1,10 @@
 {
-	"name": "roo-cline",
-	"displayName": "Roo Code (prev. Roo Cline)",
+	"name": "roo-cline-paper",
+	"displayName": "Roo Code Paper",
 	"description": "An AI-powered autonomous coding agent that lives in your editor.",
-	"publisher": "RooVeterinaryInc",
-	"version": "3.3.20",
-	"icon": "assets/icons/rocket.png",
+	"publisher": "PaperGames",
+	"version": "0.0.1",
+	"icon": "assets/icons/hammer.png",
 	"galleryBanner": {
 		"color": "#617A91",
 		"theme": "dark"
@@ -41,7 +41,7 @@
 		"sonnet",
 		"ai",
 		"llama",
-		"roo code",
+		"Roo Code Paper",
 		"roocode"
 	],
 	"activationEvents": [
@@ -53,195 +53,195 @@
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "roo-cline-ActivityBar",
-					"title": "Roo Code",
-					"icon": "$(rocket)"
+					"id": "roo-cline-paper-ActivityBar",
+					"title": "Roo Code Paper",
+					"icon": "$(tools)"
 				}
 			]
 		},
 		"views": {
-			"roo-cline-ActivityBar": [
+			"roo-cline-paper-ActivityBar": [
 				{
 					"type": "webview",
-					"id": "roo-cline.SidebarProvider",
+					"id": "roo-cline-paper.SidebarProvider",
 					"name": ""
 				}
 			]
 		},
 		"commands": [
 			{
-				"command": "roo-cline.plusButtonClicked",
+				"command": "roo-cline-paper.plusButtonClicked",
 				"title": "New Task",
 				"icon": "$(add)"
 			},
 			{
-				"command": "roo-cline.mcpButtonClicked",
+				"command": "roo-cline-paper.mcpButtonClicked",
 				"title": "MCP Servers",
 				"icon": "$(server)"
 			},
 			{
-				"command": "roo-cline.promptsButtonClicked",
+				"command": "roo-cline-paper.promptsButtonClicked",
 				"title": "Prompts",
 				"icon": "$(notebook)"
 			},
 			{
-				"command": "roo-cline.historyButtonClicked",
+				"command": "roo-cline-paper.historyButtonClicked",
 				"title": "History",
 				"icon": "$(history)"
 			},
 			{
-				"command": "roo-cline.popoutButtonClicked",
+				"command": "roo-cline-paper.popoutButtonClicked",
 				"title": "Open in Editor",
 				"icon": "$(link-external)"
 			},
 			{
-				"command": "roo-cline.settingsButtonClicked",
+				"command": "roo-cline-paper.settingsButtonClicked",
 				"title": "Settings",
 				"icon": "$(settings-gear)"
 			},
 			{
-				"command": "roo-cline.helpButtonClicked",
+				"command": "roo-cline-paper.helpButtonClicked",
 				"title": "Documentation",
 				"icon": "$(question)"
 			},
 			{
-				"command": "roo-cline.openInNewTab",
+				"command": "roo-cline-paper.openInNewTab",
 				"title": "Open In New Tab",
-				"category": "Roo Code"
+				"category": "Roo Code Paper"
 			},
 			{
-				"command": "roo-cline.explainCode",
-				"title": "Roo Code: Explain Code",
-				"category": "Roo Code"
+				"command": "roo-cline-paper.explainCode",
+				"title": "Roo Code Paper: Explain Code",
+				"category": "Roo Code Paper"
 			},
 			{
-				"command": "roo-cline.fixCode",
-				"title": "Roo Code: Fix Code",
-				"category": "Roo Code"
+				"command": "roo-cline-paper.fixCode",
+				"title": "Roo Code Paper: Fix Code",
+				"category": "Roo Code Paper"
 			},
 			{
-				"command": "roo-cline.improveCode",
-				"title": "Roo Code: Improve Code",
-				"category": "Roo Code"
+				"command": "roo-cline-paper.improveCode",
+				"title": "Roo Code Paper: Improve Code",
+				"category": "Roo Code Paper"
 			},
 			{
-				"command": "roo-cline.addToContext",
-				"title": "Roo Code: Add To Context",
-				"category": "Roo Code"
+				"command": "roo-cline-paper.addToContext",
+				"title": "Roo Code Paper: Add To Context",
+				"category": "Roo Code Paper"
 			},
 			{
-				"command": "roo-cline.terminalAddToContext",
-				"title": "Roo Code: Add Terminal Content to Context",
+				"command": "roo-cline-paper.terminalAddToContext",
+				"title": "Roo Code Paper: Add Terminal Content to Context",
 				"category": "Terminal"
 			},
 			{
-				"command": "roo-cline.terminalFixCommand",
-				"title": "Roo Code: Fix This Command",
+				"command": "roo-cline-paper.terminalFixCommand",
+				"title": "Roo Code Paper: Fix This Command",
 				"category": "Terminal"
 			},
 			{
-				"command": "roo-cline.terminalExplainCommand",
-				"title": "Roo Code: Explain This Command",
+				"command": "roo-cline-paper.terminalExplainCommand",
+				"title": "Roo Code Paper: Explain This Command",
 				"category": "Terminal"
 			},
 			{
-				"command": "roo-cline.terminalFixCommandInCurrentTask",
-				"title": "Roo Code: Fix This Command (Current Task)",
+				"command": "roo-cline-paper.terminalFixCommandInCurrentTask",
+				"title": "Roo Code Paper: Fix This Command (Current Task)",
 				"category": "Terminal"
 			},
 			{
-				"command": "roo-cline.terminalExplainCommandInCurrentTask",
-				"title": "Roo Code: Explain This Command (Current Task)",
+				"command": "roo-cline-paper.terminalExplainCommandInCurrentTask",
+				"title": "Roo Code Paper: Explain This Command (Current Task)",
 				"category": "Terminal"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
-					"command": "roo-cline.explainCode",
+					"command": "roo-cline-paper.explainCode",
 					"when": "editorHasSelection",
-					"group": "Roo Code@1"
+					"group": "Roo Code Paper@1"
 				},
 				{
-					"command": "roo-cline.fixCode",
+					"command": "roo-cline-paper.fixCode",
 					"when": "editorHasSelection",
-					"group": "Roo Code@2"
+					"group": "Roo Code Paper@2"
 				},
 				{
-					"command": "roo-cline.improveCode",
+					"command": "roo-cline-paper.improveCode",
 					"when": "editorHasSelection",
-					"group": "Roo Code@3"
+					"group": "Roo Code Paper@3"
 				},
 				{
-					"command": "roo-cline.addToContext",
+					"command": "roo-cline-paper.addToContext",
 					"when": "editorHasSelection",
-					"group": "Roo Code@4"
+					"group": "Roo Code Paper@4"
 				}
 			],
 			"terminal/context": [
 				{
-					"command": "roo-cline.terminalAddToContext",
-					"group": "Roo Code@1"
+					"command": "roo-cline-paper.terminalAddToContext",
+					"group": "Roo Code Paper@1"
 				},
 				{
-					"command": "roo-cline.terminalFixCommand",
-					"group": "Roo Code@2"
+					"command": "roo-cline-paper.terminalFixCommand",
+					"group": "Roo Code Paper@2"
 				},
 				{
-					"command": "roo-cline.terminalExplainCommand",
-					"group": "Roo Code@3"
+					"command": "roo-cline-paper.terminalExplainCommand",
+					"group": "Roo Code Paper@3"
 				},
 				{
-					"command": "roo-cline.terminalFixCommandInCurrentTask",
-					"group": "Roo Code@5"
+					"command": "roo-cline-paper.terminalFixCommandInCurrentTask",
+					"group": "Roo Code Paper@5"
 				},
 				{
-					"command": "roo-cline.terminalExplainCommandInCurrentTask",
-					"group": "Roo Code@6"
+					"command": "roo-cline-paper.terminalExplainCommandInCurrentTask",
+					"group": "Roo Code Paper@6"
 				}
 			],
 			"view/title": [
 				{
-					"command": "roo-cline.plusButtonClicked",
+					"command": "roo-cline-paper.plusButtonClicked",
 					"group": "navigation@1",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				},
 				{
-					"command": "roo-cline.promptsButtonClicked",
+					"command": "roo-cline-paper.promptsButtonClicked",
 					"group": "navigation@2",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				},
 				{
-					"command": "roo-cline.mcpButtonClicked",
+					"command": "roo-cline-paper.mcpButtonClicked",
 					"group": "navigation@3",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				},
 				{
-					"command": "roo-cline.historyButtonClicked",
+					"command": "roo-cline-paper.historyButtonClicked",
 					"group": "navigation@4",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				},
 				{
-					"command": "roo-cline.popoutButtonClicked",
+					"command": "roo-cline-paper.popoutButtonClicked",
 					"group": "navigation@5",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				},
 				{
-					"command": "roo-cline.settingsButtonClicked",
+					"command": "roo-cline-paper.settingsButtonClicked",
 					"group": "navigation@6",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				},
 				{
-					"command": "roo-cline.helpButtonClicked",
+					"command": "roo-cline-paper.helpButtonClicked",
 					"group": "navigation@7",
-					"when": "view == roo-cline.SidebarProvider"
+					"when": "view == roo-cline-paper.SidebarProvider"
 				}
 			]
 		},
 		"configuration": {
-			"title": "Roo Code",
+			"title": "Roo Code Paper",
 			"properties": {
-				"roo-cline.allowedCommands": {
+				"roo-cline-paper.allowedCommands": {
 					"type": "array",
 					"items": {
 						"type": "string"
@@ -256,7 +256,7 @@
 					],
 					"description": "Commands that can be auto-executed when 'Always approve execute operations' is enabled"
 				},
-				"roo-cline.vsCodeLmModelSelector": {
+				"roo-cline-paper.vsCodeLmModelSelector": {
 					"type": "object",
 					"properties": {
 						"vendor": {

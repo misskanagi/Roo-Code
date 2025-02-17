@@ -29,7 +29,7 @@ export async function run(): Promise<void> {
 		files.forEach((f: string) => mocha.addFile(path.resolve(testsRoot, f)))
 
 		//Set up global extension, api, provider, and panel
-		globalThis.extension = vscode.extensions.getExtension("RooVeterinaryInc.roo-cline")
+		globalThis.extension = vscode.extensions.getExtension("PaperGames.roo-cline-paper")
 		if (!globalThis.extension) {
 			throw new Error("Extension not found")
 		}
@@ -46,8 +46,8 @@ export async function run(): Promise<void> {
 		)
 
 		globalThis.panel = vscode.window.createWebviewPanel(
-			"roo-cline.SidebarProvider",
-			"Roo Code",
+			"roo-cline-paper.SidebarProvider",
+			"Roo Code Paper",
 			vscode.ViewColumn.One,
 			{
 				enableScripts: true,

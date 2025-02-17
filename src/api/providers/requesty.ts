@@ -15,7 +15,7 @@ export class RequestyHandler extends OpenAiHandler {
 			openAiCustomModelInfo: options.requestyModelInfo ?? requestyModelInfoSaneDefaults,
 			defaultHeaders: {
 				"HTTP-Referer": "https://github.com/RooVetGit/Roo-Cline",
-				"X-Title": "Roo Code",
+				"X-Title": "Roo Code Paper",
 			},
 		})
 	}

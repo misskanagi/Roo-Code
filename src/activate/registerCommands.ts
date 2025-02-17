@@ -19,33 +19,33 @@ export const registerCommands = (options: RegisterCommandOptions) => {
 
 const getCommandsMap = ({ context, outputChannel, provider }: RegisterCommandOptions) => {
 	return {
-		"roo-cline.plusButtonClicked": async () => {
+		"roo-cline-paper.plusButtonClicked": async () => {
 			await provider.clearTask()
 			await provider.postStateToWebview()
 			await provider.postMessageToWebview({ type: "action", action: "chatButtonClicked" })
 		},
-		"roo-cline.mcpButtonClicked": () => {
+		"roo-cline-paper.mcpButtonClicked": () => {
 			provider.postMessageToWebview({ type: "action", action: "mcpButtonClicked" })
 		},
-		"roo-cline.promptsButtonClicked": () => {
+		"roo-cline-paper.promptsButtonClicked": () => {
 			provider.postMessageToWebview({ type: "action", action: "promptsButtonClicked" })
 		},
-		"roo-cline.popoutButtonClicked": () => openClineInNewTab({ context, outputChannel }),
-		"roo-cline.openInNewTab": () => openClineInNewTab({ context, outputChannel }),
-		"roo-cline.settingsButtonClicked": () => {
+		"roo-cline-paper.popoutButtonClicked": () => openClineInNewTab({ context, outputChannel }),
+		"roo-cline-paper.openInNewTab": () => openClineInNewTab({ context, outputChannel }),
+		"roo-cline-paper.settingsButtonClicked": () => {
 			provider.postMessageToWebview({ type: "action", action: "settingsButtonClicked" })
 		},
-		"roo-cline.historyButtonClicked": () => {
+		"roo-cline-paper.historyButtonClicked": () => {
 			provider.postMessageToWebview({ type: "action", action: "historyButtonClicked" })
 		},
-		"roo-cline.helpButtonClicked": () => {
+		"roo-cline-paper.helpButtonClicked": () => {
 			vscode.env.openExternal(vscode.Uri.parse("https://docs.roocode.com"))
 		},
 	}
 }
 
 const openClineInNewTab = async ({ context, outputChannel }: Omit<RegisterCommandOptions, "provider">) => {
-	outputChannel.appendLine("Opening Roo Code in new tab")
+	outputChannel.appendLine("Opening Roo Code Paper in new tab")
 
 	// (This example uses webviewProvider activation event which is necessary to
 	// deserialize cached webview, but since we use retainContextWhenHidden, we
@@ -65,7 +65,7 @@ const openClineInNewTab = async ({ context, outputChannel }: Omit<RegisterComman
 
 	const targetCol = hasVisibleEditors ? Math.max(lastCol + 1, 1) : vscode.ViewColumn.Two
 
-	const panel = vscode.window.createWebviewPanel(ClineProvider.tabPanelId, "Roo Code", targetCol, {
+	const panel = vscode.window.createWebviewPanel(ClineProvider.tabPanelId, "Roo Code Paper", targetCol, {
 		enableScripts: true,
 		retainContextWhenHidden: true,
 		localResourceRoots: [context.extensionUri],
@@ -74,8 +74,8 @@ const openClineInNewTab = async ({ context, outputChannel }: Omit<RegisterComman
 	// TODO: use better svg icon with light and dark variants (see
 	// https://stackoverflow.com/questions/58365687/vscode-extension-iconpath).
 	panel.iconPath = {
-		light: vscode.Uri.joinPath(context.extensionUri, "assets", "icons", "rocket.png"),
-		dark: vscode.Uri.joinPath(context.extensionUri, "assets", "icons", "rocket.png"),
+		light: vscode.Uri.joinPath(context.extensionUri, "assets", "icons", "hammer.png"),
+		dark: vscode.Uri.joinPath(context.extensionUri, "assets", "icons", "hammer.png"),
 	}
 
 	await tabProvider.resolveWebviewView(panel)

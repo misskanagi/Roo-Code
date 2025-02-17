@@ -36,7 +36,7 @@ export class OpenRouterHandler implements ApiHandler, SingleCompletionHandler {
 
 		const defaultHeaders = {
 			"HTTP-Referer": "https://github.com/RooVetGit/Roo-Cline",
-			"X-Title": "Roo Code",
+			"X-Title": "Roo Code Paper",
 		}
 
 		this.client = new OpenAI({ baseURL, apiKey, defaultHeaders })

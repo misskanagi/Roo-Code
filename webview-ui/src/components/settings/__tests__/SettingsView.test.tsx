@@ -1,4 +1,5 @@
-import React from "react"
+// npx jest src/components/settings/__tests__/SettingsView.test.ts
+
 import { render, screen, fireEvent } from "@testing-library/react"
 import SettingsView from "../SettingsView"
 import { ExtensionStateContextProvider } from "../../../context/ExtensionStateContext"
@@ -10,6 +11,22 @@ jest.mock("../../../utils/vscode", () => ({
 		postMessage: jest.fn(),
 	},
 }))
+
+// Mock all lucide-react icons with a proxy to handle any icon requested
+jest.mock("lucide-react", () => {
+	return new Proxy(
+		{},
+		{
+			get: function (obj, prop) {
+				// Return a component factory for any icon that's requested
+				if (prop === "__esModule") {
+					return true
+				}
+				return () => <div data-testid={`${String(prop)}-icon`}>{String(prop)}</div>
+			},
+		},
+	)
+})
 
 // Mock ApiConfigManager component
 jest.mock("../ApiConfigManager", () => ({
@@ -138,9 +155,9 @@ describe("SettingsView - Sound Settings", () => {
 		fireEvent.click(soundCheckbox)
 		expect(soundCheckbox).toBeChecked()
 
-		// Click Done to save settings
-		const doneButton = screen.getByText("Done")
-		fireEvent.click(doneButton)
+		// Click Save to save settings
+		const saveButton = screen.getByText("Save")
+		fireEvent.click(saveButton)
 
 		expect(vscode.postMessage).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -178,9 +195,9 @@ describe("SettingsView - Sound Settings", () => {
 		const volumeSlider = screen.getByRole("slider", { name: /volume/i })
 		fireEvent.change(volumeSlider, { target: { value: "0.75" } })
 
-		// Click Done to save settings
-		const doneButton = screen.getByText("Done")
-		fireEvent.click(doneButton)
+		// Click Save to save settings
+		const saveButton = screen.getByText("Save")
+		fireEvent.click(saveButton)
 
 		// Verify message sent to VSCode
 		expect(vscode.postMessage).toHaveBeenCalledWith({
@@ -302,8 +319,8 @@ describe("SettingsView - Allowed Commands", () => {
 		expect(commands).toHaveLength(1)
 	})
 
-	it("saves allowed commands when clicking Done", () => {
-		const { onDone } = renderSettingsView()
+	it("saves allowed commands when clicking Save", () => {
+		renderSettingsView()
 
 		// Enable always allow execute
 		const executeCheckbox = screen.getByRole("checkbox", {
@@ -317,9 +334,9 @@ describe("SettingsView - Allowed Commands", () => {
 		const addButton = screen.getByText("Add")
 		fireEvent.click(addButton)
 
-		// Click Done
-		const doneButton = screen.getByText("Done")
-		fireEvent.click(doneButton)
+		// Click Save
+		const saveButton = screen.getByText("Save")
+		fireEvent.click(saveButton)
 
 		// Verify VSCode messages were sent
 		expect(vscode.postMessage).toHaveBeenCalledWith(
@@ -328,6 +345,5 @@ describe("SettingsView - Allowed Commands", () => {
 				commands: ["npm test"],
 			}),
 		)
-		expect(onDone).toHaveBeenCalled()
 	})
 })

@@ -9,6 +9,19 @@ import {
 	VSCodeRadioGroup,
 	VSCodeRadio,
 } from "@vscode/webview-ui-toolkit/react"
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
+import {
+	Button,
+	Command,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui"
+import { cn } from "@/lib/utils"
 import { useExtensionState } from "../../context/ExtensionStateContext"
 import {
 	Mode,
@@ -66,12 +79,16 @@ const PromptsView = ({ onDone }: PromptsViewProps) => {
 	const [testPrompt, setTestPrompt] = useState("")
 	const [isEnhancing, setIsEnhancing] = useState(false)
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	const [open, setOpen] = useState(false)
+	const [isCustomLanguage, setIsCustomLanguage] = useState(false)
+	const [customLanguage, setCustomLanguage] = useState("")
 	const [selectedPromptContent, setSelectedPromptContent] = useState("")
 	const [selectedPromptTitle, setSelectedPromptTitle] = useState("")
 	const [isToolsEditMode, setIsToolsEditMode] = useState(false)
 	const [showConfigMenu, setShowConfigMenu] = useState(false)
 	const [isCreateModeDialogOpen, setIsCreateModeDialogOpen] = useState(false)
 	const [activeSupportTab, setActiveSupportTab] = useState<SupportPromptType>("ENHANCE")
+	const [isSystemPromptDisclosureOpen, setIsSystemPromptDisclosureOpen] = useState(false)
 
 	// Direct update functions
 	const updateAgentPrompt = useCallback(
@@ -390,46 +407,96 @@ const PromptsView = ({ onDone }: PromptsViewProps) => {
 
 	return (
 		<div className="fixed inset-0 flex flex-col">
-			<div className="flex justify-between items-center px-5 py-2.5">
+			<div className="flex justify-between items-center px-5 py-2.5 border-b border-vscode-panel-border">
 				<h3 className="text-vscode-foreground m-0">Prompts</h3>
 				<VSCodeButton onClick={onDone}>Done</VSCodeButton>
 			</div>
-
-			<div className="flex-1 overflow-auto px-5">
+			<div className="flex-1 overflow-auto p-5">
 				<div className="pb-5 border-b border-vscode-input-border">
 					<div className="mb-5">
 						<div className="font-bold mb-1">Preferred Language</div>
-						<select
-							value={preferredLanguage}
-							onChange={(e) => {
-								setPreferredLanguage(e.target.value)
-								vscode.postMessage({
-									type: "preferredLanguage",
-									text: e.target.value,
-								})
-							}}
-							className="w-full px-2 py-1 h-7 bg-vscode-input-background text-vscode-input-foreground border border-vscode-input-border rounded">
-							<option value="English">English</option>
-							<option value="Arabic">Arabic - العربية</option>
-							<option value="Brazilian Portuguese">Portuguese - Português (Brasil)</option>
-							<option value="Czech">Czech - Čeština</option>
-							<option value="French">French - Français</option>
-							<option value="German">German - Deutsch</option>
-							<option value="Hindi">Hindi - हिन्दी</option>
-							<option value="Hungarian">Hungarian - Magyar</option>
-							<option value="Italian">Italian - Italiano</option>
-							<option value="Japanese">Japanese - 日本語</option>
-							<option value="Korean">Korean - 한국어</option>
-							<option value="Polish">Polish - Polski</option>
-							<option value="Portuguese">Portuguese - Português (Portugal)</option>
-							<option value="Russian">Russian - Русский</option>
-							<option value="Simplified Chinese">Simplified Chinese - 简体中文</option>
-							<option value="Spanish">Spanish - Español</option>
-							<option value="Traditional Chinese">Traditional Chinese - 繁體中文</option>
-							<option value="Turkish">Turkish - Türkçe</option>
-						</select>
+						<Popover open={open} onOpenChange={setOpen}>
+							<PopoverTrigger asChild>
+								<Button
+									variant="combobox"
+									role="combobox"
+									aria-expanded={open}
+									className="w-full justify-between">
+									{preferredLanguage ?? "Select language..."}
+									<CaretSortIcon className="opacity-50" />
+								</Button>
+							</PopoverTrigger>
+							<PopoverContent align="start" className="p-0">
+								<Command>
+									<CommandInput placeholder="Search language..." className="h-9" />
+									<CommandList>
+										<CommandGroup>
+											{[
+												{ value: "English", label: "English" },
+												{ value: "Arabic", label: "Arabic - العربية" },
+												{
+													value: "Brazilian Portuguese",
+													label: "Portuguese - Português (Brasil)",
+												},
+												{ value: "Catalan", label: "Catalan - Català" },
+												{ value: "Czech", label: "Czech - Čeština" },
+												{ value: "French", label: "French - Français" },
+												{ value: "German", label: "German - Deutsch" },
+												{ value: "Hindi", label: "Hindi - हिन्दी" },
+												{ value: "Hungarian", label: "Hungarian - Magyar" },
+												{ value: "Italian", label: "Italian - Italiano" },
+												{ value: "Japanese", label: "Japanese - 日本語" },
+												{ value: "Korean", label: "Korean - 한국어" },
+												{ value: "Polish", label: "Polish - Polski" },
+												{ value: "Portuguese", label: "Portuguese - Português (Portugal)" },
+												{ value: "Russian", label: "Russian - Русский" },
+												{ value: "Simplified Chinese", label: "Simplified Chinese - 简体中文" },
+												{ value: "Spanish", label: "Spanish - Español" },
+												{
+													value: "Traditional Chinese",
+													label: "Traditional Chinese - 繁體中文",
+												},
+												{ value: "Turkish", label: "Turkish - Türkçe" },
+											].map((language) => (
+												<CommandItem
+													key={language.value}
+													value={language.value}
+													onSelect={(value) => {
+														setPreferredLanguage(value)
+														vscode.postMessage({
+															type: "preferredLanguage",
+															text: value,
+														})
+														setOpen(false)
+													}}>
+													{language.label}
+													<CheckIcon
+														className={cn(
+															"ml-auto",
+															preferredLanguage === language.value
+																? "opacity-100"
+																: "opacity-0",
+														)}
+													/>
+												</CommandItem>
+											))}
+										</CommandGroup>
+									</CommandList>
+								</Command>
+								<div className="border-t border-[var(--vscode-input-border)]">
+									<button
+										className="w-full px-2 py-1.5 text-sm text-left hover:bg-[var(--vscode-list-hoverBackground)]"
+										onClick={() => {
+											setIsCustomLanguage(true)
+											setOpen(false)
+										}}>
+										+ Choose another language
+									</button>
+								</div>
+							</PopoverContent>
+						</Popover>
 						<p className="text-xs mt-1.5 text-vscode-descriptionForeground">
-							Select the language that Cline should use for communication.
+							Select the language that Roo should use for communication.
 						</p>
 					</div>
 
@@ -892,14 +959,56 @@ const PromptsView = ({ onDone }: PromptsViewProps) => {
 							appearance="icon"
 							title="Copy system prompt to clipboard"
 							onClick={() => {
-								vscode.postMessage({
-									type: "copySystemPrompt",
-									text: selectedPromptContent,
-								})
+								const currentMode = getCurrentMode()
+								if (currentMode) {
+									vscode.postMessage({
+										type: "copySystemPrompt",
+										mode: currentMode.slug,
+									})
+								}
 							}}
 							data-testid="copy-prompt-button">
 							<span className="codicon codicon-copy"></span>
 						</VSCodeButton>
+					</div>
+
+					{/* Custom System Prompt Disclosure */}
+					<div className="mb-3 mt-12">
+						<button
+							onClick={() => setIsSystemPromptDisclosureOpen(!isSystemPromptDisclosureOpen)}
+							className="flex items-center text-xs text-vscode-foreground hover:text-vscode-textLink-foreground focus:outline-none"
+							aria-expanded={isSystemPromptDisclosureOpen}>
+							<span
+								className={`codicon codicon-${isSystemPromptDisclosureOpen ? "chevron-down" : "chevron-right"} mr-1`}></span>
+							<span>Advanced: Override System Prompt</span>
+						</button>
+
+						{isSystemPromptDisclosureOpen && (
+							<div className="text-xs text-vscode-descriptionForeground mt-2 ml-5">
+								You can completely replace the system prompt for this mode (aside from the role
+								definition and custom instructions) by creating a file at{" "}
+								<span
+									className="text-vscode-textLink-foreground cursor-pointer underline"
+									onClick={() => {
+										const currentMode = getCurrentMode()
+										if (!currentMode) return
+
+										// Open or create an empty file
+										vscode.postMessage({
+											type: "openFile",
+											text: `./.roo/system-prompt-${currentMode.slug}`,
+											values: {
+												create: true,
+												content: "",
+											},
+										})
+									}}>
+									.roo/system-prompt-{getCurrentMode()?.slug || "code"}
+								</span>{" "}
+								in your workspace. This is a very advanced feature that bypasses built-in safeguards and
+								consistency checks (especially around tool usage), so be careful!
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -1064,7 +1173,6 @@ const PromptsView = ({ onDone }: PromptsViewProps) => {
 					</div>
 				</div>
 			</div>
-
 			{isCreateModeDialogOpen && (
 				<div
 					style={{
@@ -1351,6 +1459,40 @@ const PromptsView = ({ onDone }: PromptsViewProps) => {
 								backgroundColor: "var(--vscode-editor-background)",
 							}}>
 							<VSCodeButton onClick={() => setIsDialogOpen(false)}>Close</VSCodeButton>
+						</div>
+					</div>
+				</div>
+			)}
+			{isCustomLanguage && (
+				<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+					<div className="bg-[var(--vscode-editor-background)] p-6 rounded-lg w-96">
+						<h3 className="text-lg font-semibold mb-4">Add Custom Language</h3>
+						<input
+							type="text"
+							className="w-full p-2 mb-4 bg-[var(--vscode-input-background)] text-[var(--vscode-input-foreground)] border border-[var(--vscode-input-border)] rounded"
+							placeholder="Enter language name"
+							value={customLanguage}
+							onChange={(e) => setCustomLanguage(e.target.value)}
+						/>
+						<div className="flex justify-end gap-2">
+							<Button variant="secondary" onClick={() => setIsCustomLanguage(false)}>
+								Cancel
+							</Button>
+							<Button
+								onClick={() => {
+									if (customLanguage.trim()) {
+										setPreferredLanguage(customLanguage.trim())
+										vscode.postMessage({
+											type: "preferredLanguage",
+											text: customLanguage.trim(),
+										})
+										setIsCustomLanguage(false)
+										setCustomLanguage("")
+									}
+								}}
+								disabled={!customLanguage.trim()}>
+								Add
+							</Button>
 						</div>
 					</div>
 				</div>

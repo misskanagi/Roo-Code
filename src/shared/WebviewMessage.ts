@@ -40,11 +40,11 @@ export interface WebviewMessage {
 		| "openFile"
 		| "openMention"
 		| "cancelTask"
-		| "refreshGlamaModels"
 		| "refreshOpenRouterModels"
-		| "refreshOpenAiModels"
+		| "refreshGlamaModels"
 		| "refreshUnboundModels"
 		| "refreshRequestyModels"
+		| "refreshOpenAiModels"
 		| "alwaysAllowBrowser"
 		| "alwaysAllowMcp"
 		| "alwaysAllowModeSwitch"
@@ -52,7 +52,8 @@ export interface WebviewMessage {
 		| "soundEnabled"
 		| "soundVolume"
 		| "diffEnabled"
-		| "checkpointsEnabled"
+		| "enableCheckpoints"
+		| "checkpointStorage"
 		| "browserViewportSize"
 		| "screenshotQuality"
 		| "openMcpSettings"
@@ -67,11 +68,10 @@ export interface WebviewMessage {
 		| "enhancedPrompt"
 		| "draggedImages"
 		| "deleteMessage"
-		| "terminalOutputLineLimit"
+		| "terminalOutputLimit"
 		| "mcpEnabled"
 		| "enableMcpServerCreation"
 		| "searchCommits"
-		| "refreshGlamaModels"
 		| "alwaysApproveResubmit"
 		| "requestDelaySeconds"
 		| "rateLimitSeconds"
@@ -93,7 +93,12 @@ export interface WebviewMessage {
 		| "openCustomModesSettings"
 		| "checkpointDiff"
 		| "checkpointRestore"
+		| "deleteMcpServer"
 		| "maxOpenTabsContext"
+		| "humanRelayResponse"
+		| "humanRelayCancel"
+		| "browserToolEnabled"
+		| "telemetrySetting"
 	text?: string
 	disabled?: boolean
 	askResponse?: ClineAskResponse
@@ -117,10 +122,24 @@ export interface WebviewMessage {
 	timeout?: number
 	payload?: WebViewMessagePayload
 	source?: "global" | "project"
+	requestId?: string
+}
+
+// Human relay related message types
+export interface HumanRelayResponseMessage extends WebviewMessage {
+	type: "humanRelayResponse"
+	requestId: string
+	text: string
+}
+
+export interface HumanRelayCancelMessage extends WebviewMessage {
+	type: "humanRelayCancel"
+	requestId: string
 }
 
 export const checkoutDiffPayloadSchema = z.object({
 	ts: z.number(),
+	previousCommitHash: z.string().optional(),
 	commitHash: z.string(),
 	mode: z.enum(["full", "checkpoint"]),
 })

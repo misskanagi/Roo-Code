@@ -13,6 +13,7 @@ import { McpServer } from "../../../../src/shared/mcp"
 import McpToolRow from "./McpToolRow"
 import McpResourceRow from "./McpResourceRow"
 import McpEnabledToggle from "./McpEnabledToggle"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "../ui/dialog"
 
 type McpViewProps = {
 	onDone: () => void
@@ -28,28 +29,12 @@ const McpView = ({ onDone }: McpViewProps) => {
 	} = useExtensionState()
 
 	return (
-		<div
-			style={{
-				position: "fixed",
-				top: 0,
-				left: 0,
-				right: 0,
-				bottom: 0,
-				display: "flex",
-				flexDirection: "column",
-			}}>
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "space-between",
-					alignItems: "center",
-					padding: "10px 17px 10px 20px",
-				}}>
-				<h3 style={{ color: "var(--vscode-foreground)", margin: 0 }}>MCP Servers</h3>
+		<div className="fixed inset-0 flex flex-col">
+			<div className="flex justify-between items-center px-5 py-2.5 border-b border-vscode-panel-border">
+				<h3 className="text-vscode-foreground m-0">MCP Servers</h3>
 				<VSCodeButton onClick={onDone}>Done</VSCodeButton>
 			</div>
-
-			<div style={{ flex: 1, overflow: "auto", padding: "0 20px" }}>
+			<div className="flex-1 overflow-auto p-5">
 				<div
 					style={{
 						color: "var(--vscode-foreground)",
@@ -118,9 +103,6 @@ const McpView = ({ onDone }: McpViewProps) => {
 						</div>
 					</>
 				)}
-
-				{/* Bottom padding */}
-				<div style={{ height: "20px" }} />
 			</div>
 		</div>
 	)
@@ -129,6 +111,7 @@ const McpView = ({ onDone }: McpViewProps) => {
 // Server Row Component
 const ServerRow = ({ server, alwaysAllowMcp }: { server: McpServer; alwaysAllowMcp?: boolean }) => {
 	const [isExpanded, setIsExpanded] = useState(false)
+	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 	const [timeoutValue, setTimeoutValue] = useState(() => {
 		const configTimeout = JSON.parse(server.config)?.timeout
 		return configTimeout ?? 60 // Default 1 minute (60 seconds)
@@ -179,6 +162,14 @@ const ServerRow = ({ server, alwaysAllowMcp }: { server: McpServer; alwaysAllowM
 		})
 	}
 
+	const handleDelete = () => {
+		vscode.postMessage({
+			type: "deleteMcpServer",
+			serverName: server.name,
+		})
+		setShowDeleteConfirm(false)
+	}
+
 	return (
 		<div style={{ marginBottom: "10px" }}>
 			<div
@@ -202,6 +193,12 @@ const ServerRow = ({ server, alwaysAllowMcp }: { server: McpServer; alwaysAllowM
 				<div
 					style={{ display: "flex", alignItems: "center", marginRight: "8px" }}
 					onClick={(e) => e.stopPropagation()}>
+					<VSCodeButton
+						appearance="icon"
+						onClick={() => setShowDeleteConfirm(true)}
+						style={{ marginRight: "8px" }}>
+						<span className="codicon codicon-trash" style={{ fontSize: "14px" }}></span>
+					</VSCodeButton>
 					<VSCodeButton
 						appearance="icon"
 						onClick={handleRestart}
@@ -393,6 +390,27 @@ const ServerRow = ({ server, alwaysAllowMcp }: { server: McpServer; alwaysAllowM
 					</div>
 				)
 			)}
+
+			{/* Delete Confirmation Dialog */}
+			<Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Delete MCP Server</DialogTitle>
+						<DialogDescription>
+							Are you sure you want to delete the MCP server "{server.name}"? This action cannot be
+							undone.
+						</DialogDescription>
+					</DialogHeader>
+					<DialogFooter>
+						<VSCodeButton appearance="secondary" onClick={() => setShowDeleteConfirm(false)}>
+							Cancel
+						</VSCodeButton>
+						<VSCodeButton appearance="primary" onClick={handleDelete}>
+							Delete
+						</VSCodeButton>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</div>
 	)
 }

@@ -1,5 +1,118 @@
 # Roo Code Paper Changelog
 
+## [3.7.12]
+
+- Expand max tokens of thinking models to 128k, and max thinking budget to over 100k (thanks @monotykamary!)
+- Fix issue where keyboard mode switcher wasn't updating API profile (thanks @aheizi!)
+- Use the count_tokens API in the Anthropic provider for more accurate context window management
+- Default middle-out compression to on for OpenRouter
+- Exclude MCP instructions from the prompt if the mode doesn't support MCP
+- Add a checkbox to disable the browser tool
+- Show a warning if checkpoints are taking too long to load
+- Update the warning text for the VS LM API
+- Correctly populate the default OpenRouter model on the welcome screen
+
+## [3.7.11]
+
+- Don't honor custom max tokens for non thinking models
+- Include custom modes in mode switching keyboard shortcut
+- Support read-only modes that can run commands
+
+## [3.7.10]
+
+- Add Gemini models on Vertex AI (thanks @ashktn!)
+- Keyboard shortcuts to switch modes (thanks @aheizi!)
+- Add support for Mermaid diagrams (thanks Cline!)
+
+## [3.7.9]
+
+- Delete task confirmation enhancements
+- Smarter context window management
+- Prettier thinking blocks
+- Fix maxTokens defaults for Claude 3.7 Sonnet models
+- Terminal output parsing improvements (thanks @KJ7LNW!)
+- UI fix to dropdown hover colors (thanks @SamirSaji!)
+- Add support for Claude Sonnet 3.7 thinking via Vertex AI (thanks @lupuletic!)
+
+## [3.7.8]
+
+- Add Vertex AI prompt caching support for Claude models (thanks @aitoroses and @lupuletic!)
+- Add gpt-4.5-preview
+- Add an advanced feature to customize the system prompt
+
+## [3.7.7]
+
+- Graduate checkpoints out of beta
+- Fix enhance prompt button when using Thinking Sonnet
+- Add tooltips to make what buttons do more obvious
+
+## [3.7.6]
+
+- Handle really long text better in the in the ChatRow similar to TaskHeader (thanks @joemanley201!)
+- Support multiple files in drag-and-drop
+- Truncate search_file output to avoid crashing the extension
+- Better OpenRouter error handling (no more "Provider Error")
+- Add slider to control max output tokens for thinking models
+
+## [3.7.5]
+
+- Fix context window truncation math (see [#1173](https://github.com/RooVetGit/Roo-Code/issues/1173))
+- Fix various issues with the model picker (thanks @System233!)
+- Fix model input / output cost parsing (thanks @System233!)
+- Add drag-and-drop for files
+- Enable the "Thinking Budget" slider for Claude 3.7 Sonnet on OpenRouter
+
+## [3.7.4]
+
+- Fix a bug that prevented the "Thinking" setting from properly updating when switching profiles.
+
+## [3.7.3]
+
+- Support for ["Thinking"](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) Sonnet 3.7 when using the Anthropic provider.
+
+## [3.7.2]
+
+- Fix computer use and prompt caching for OpenRouter's `anthropic/claude-3.7-sonnet:beta` (thanks @cte!)
+- Fix sliding window calculations for Sonnet 3.7 that were causing a context window overflow (thanks @cte!)
+- Encourage diff editing more strongly in the system prompt (thanks @hannesrudolph!)
+
+## [3.7.1]
+
+- Add AWS Bedrock support for Sonnet 3.7 and update some defaults to Sonnet 3.7 instead of 3.5
+
+## [3.7.0]
+
+- Introducing Roo Code 3.7, with support for the new Claude Sonnet 3.7. Because who cares about skipping version numbers anymore? Thanks @lupuletic and @cte for the PRs!
+
+## [3.3.26]
+
+- Adjust the default prompt for Debug mode to focus more on diagnosis and to require user confirmation before moving on to implementation
+
+## [3.3.25]
+
+- Add a "Debug" mode that specializes in debugging tricky problems (thanks [Ted Werbel](https://x.com/tedx_ai/status/1891514191179309457) and [Carlos E. Perez](https://x.com/IntuitMachine/status/1891516362486337739)!)
+- Add an experimental "Power Steering" option to significantly improve adherence to role definitions and custom instructions
+
+## [3.3.24]
+
+- Fixed a bug with region selection preventing AWS Bedrock profiles from being saved (thanks @oprstchn!)
+- Updated the price of gpt-4o (thanks @marvijo-code!)
+
+## [3.3.23]
+
+- Handle errors more gracefully when reading custom instructions from files (thanks @joemanley201!)
+- Bug fix to hitting "Done" on settings page with unsaved changes (thanks @System233!)
+
+## [3.3.22]
+
+- Improve the Provider Settings configuration with clear Save buttons and warnings about unsaved changes (thanks @System233!)
+- Correctly parse `<think>` reasoning tags from Ollama models (thanks @System233!)
+- Add support for setting custom preferred languages on the Prompts tab, as well as adding Catalan to the list of languages (thanks @alarno!)
+- Add a button to delete MCP servers (thanks @hannesrudolph!)
+- Fix a bug where the button to copy the system prompt preview always copied the Code mode version
+- Fix a bug where the .roomodes file was not automatically created when adding custom modes from the Prompts tab
+- Allow setting a wildcard (`*`) to auto-approve all command execution (use with caution!)
+
 ## [3.3.21]
 
 - Fix input box revert issue and configuration loss during profile switch (thanks @System233!)

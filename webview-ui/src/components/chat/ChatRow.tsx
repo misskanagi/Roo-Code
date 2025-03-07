@@ -500,7 +500,7 @@ export const ChatRowContent = ({
 									{title}
 									<VSCodeBadge
 										style={{ opacity: cost !== null && cost !== undefined && cost > 0 ? 1 : 0 }}>
-										${Number(cost || 0)?.toFixed(4)}
+										￥{Number(cost || 0)?.toFixed(4)}
 									</VSCodeBadge>
 								</div>
 								<span className={`codicon codicon-chevron-${isExpanded ? "up" : "down"}`}></span>

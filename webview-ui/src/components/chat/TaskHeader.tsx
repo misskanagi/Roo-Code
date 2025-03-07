@@ -331,7 +331,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 								<div className="flex justify-between items-center h-[20px]">
 									<div className="flex items-center gap-1">
 										<span className="font-bold">API Cost:</span>
-										<span>${totalCost?.toFixed(4)}</span>
+										<span>￥{totalCost?.toFixed(4)}</span>
 									</div>
 									<TaskActions item={currentTaskItem} />
 								</div>
